@@ -4,7 +4,9 @@ Production-ready TypeScript (`pnpm`) template featuring native Node.js validatio
 
 ## Key Features
 
-- **Pure `pnpm` + Native TypeScript**: Runs directly on Node 24 native type stripping (`tools/*.mjs`) with zero `npm`, `npx`, or external formatter overhead.
+- **Pure `pnpm` + Native TypeScript**: Runs directly on Node 24+ native type stripping (`tools/*.mjs`) backed by strict `tsconfig.json` flags with zero `npm`, `npx`, or external formatter overhead.
+- **Real Semantic Analyzers**: `oxlint --deny-warnings` (correctness, suspicious, pedantic, perf) and `tsc --noEmit` run as the `lint` and `typecheck` gates, pinned to exact versions that respect the 3-day cooldown.
+- **Strict Static Analysis & Policy Lock**: Forbids explicit `any`, double casts, non-null assertions, `var`, loose equality, `enum`/`namespace`, `console.*` in `src/`, and boolean parameter flags; `tests/architecture.test.ts` locks all compiler and lint policies against weakening.
 - **Layered Modular Architecture**: Reference domain module (`src/modules/math/`) separating `entity`, `dto`, `repository`, `service`, `controller`, and `module` layers with automated boundary tests.
 - **Eight Standardized Validation Gates**: `lint`, `typecheck`, `unit tests`, `integration and architecture tests`, `cooldown`, `hygiene`, `notices`, and `release`.
 - **Supply-Chain Hardening**: 3-day dependency publish-age cooldown (`minimumReleaseAge: 4320`), CodeQL static analysis, and automated SBOM/dependency inventory artifacts.
@@ -52,8 +54,8 @@ pnpm release:check  # Verify package.json version matches CHANGELOG.md
 
 | Gate | Implementation | Purpose |
 | :--- | :--- | :--- |
-| `lint` | `node tools/lint.mjs` | Static source checks and forbidden APIs |
-| `typecheck` | `node tools/typecheck.mjs` | Native TypeScript type-stripping verification |
+| `lint` | `node tools/lint.mjs` | `oxlint --deny-warnings` plus JSDoc, import-extension, and cast rules |
+| `typecheck` | `node tools/typecheck.mjs` | `tsc --noEmit`, type-stripping, explicit signatures, strict `tsconfig.json` lock |
 | `unit tests` | `node --test tests/unit.test.ts` | Fast unit test execution |
 | `integration and architecture tests` | `node --test tests/architecture.test.ts tests/security.test.ts` | Boundary and security tripwires |
 | `cooldown` | `pnpm-workspace.yaml` (`minimumReleaseAge: 4320`) | 3-day package release cooldown |

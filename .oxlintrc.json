@@ -1,0 +1,79 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "ignorePatterns": ["dist/**", "node_modules/**", ".git/**"],
+  "plugins": ["eslint", "typescript", "oxc", "unicorn", "import", "node", "promise"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "pedantic": "warn",
+    "perf": "warn",
+    "restriction": "off",
+    "style": "off",
+    "nursery": "off"
+  },
+  "rules": {
+    "eslint/eqeqeq": ["error", "always"],
+    "eslint/max-lines": ["error", { "max": 500, "skipBlankLines": false, "skipComments": false }],
+    "eslint/max-lines-per-function": "off",
+    "eslint/no-console": "error",
+    "eslint/no-debugger": "error",
+    "eslint/no-eval": "error",
+    "eslint/no-inline-comments": "off",
+    "eslint/no-magic-numbers": "off",
+    "eslint/no-negated-condition": "off",
+    "eslint/no-new-func": "error",
+    "eslint/no-restricted-globals": ["error", "localStorage", "sessionStorage"],
+    "eslint/no-restricted-properties": [
+      "error",
+      { "object": "document", "property": "cookie", "message": "cookie access forbidden" }
+    ],
+    "eslint/no-throw-literal": "error",
+    "eslint/no-var": "error",
+    "eslint/no-warning-comments": ["error", { "terms": ["todo", "fixme"], "location": "anywhere" }],
+    "import/no-cycle": "error",
+    "import/no-default-export": "error",
+    "oxc/no-const-enum": "error",
+    "typescript/ban-ts-comment": [
+      "error",
+      {
+        "ts-ignore": true,
+        "ts-nocheck": true,
+        "ts-check": false,
+        "ts-expect-error": "allow-with-description",
+        "minimumDescriptionLength": 10
+      }
+    ],
+    "typescript/consistent-type-imports": [
+      "error",
+      { "prefer": "type-imports", "fixStyle": "separate-type-imports" }
+    ],
+    "typescript/explicit-function-return-type": ["error", { "allowExpressions": true }],
+    "typescript/no-explicit-any": "error",
+    "typescript/no-namespace": "error",
+    "typescript/no-non-null-asserted-optional-chain": "error",
+    "typescript/no-non-null-assertion": "error"
+  },
+  "overrides": [
+    {
+      "files": ["tests/**/*.ts"],
+      "rules": {
+        "eslint/no-console": "off",
+        "typescript/explicit-function-return-type": "off"
+      }
+    },
+    {
+      "files": ["tools/**/*.mjs"],
+      "rules": {
+        "eslint/no-console": "off",
+        "eslint/max-depth": "off",
+        "eslint/require-unicode-regexp": "off",
+        "typescript/explicit-function-return-type": "off",
+        "unicorn/no-lonely-if": "off",
+        "unicorn/no-negated-condition": "off",
+        "unicorn/no-process-exit": "off",
+        "unicorn/prefer-at": "off",
+        "unicorn/prefer-string-replace-all": "off"
+      }
+    }
+  ]
+}

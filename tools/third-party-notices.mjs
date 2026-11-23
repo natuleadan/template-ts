@@ -14,9 +14,9 @@ function readTextOrEmpty(path) {
 
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const deps = Object.keys({
-  ...(pkg.dependencies ?? {}),
-  ...(pkg.devDependencies ?? {}),
-}).sort();
+  ...pkg.dependencies,
+  ...pkg.devDependencies,
+}).toSorted();
 
 function readLicenseText(depName) {
   const dir = join(root, "node_modules", depName);

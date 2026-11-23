@@ -13,7 +13,7 @@ flowchart LR
     Controller --> Service
     Controller --> DTO["dto.ts (Contracts)"]
     Service --> DTO
-    Service --> Entity["entity.rs / entity.ts"]
+    Service --> Entity["entity.ts (Domain Model)"]
     Service --> Repository
     Repository --> Entity
 ```
@@ -39,6 +39,12 @@ The included `src/modules/math/` module demonstrates this pattern with an additi
 2. Re-export the module factory and public types from `src/index.ts`.
 3. Add functional unit tests in `tests/unit.test.ts` and layer boundary assertions in `tests/architecture.test.ts`.
 4. Run `pnpm validate` to verify all eight gates pass.
+
+## Strict Static Policy & Tripwires
+
+- **Compiler Lock**: `tsconfig.json` enforces `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes`, `noImplicitOverride`, `noImplicitReturns`, `noUnusedLocals`, `noUnusedParameters`, `verbatimModuleSyntax`, `erasableSyntaxOnly`, and `isolatedModules`.
+- **Analyzer Lock**: `.oxlintrc.json` (`correctness` and `suspicious` at error, `pedantic` and `perf` at warn, `--deny-warnings`) and `tsc --noEmit` are the semantic gates; formatting rules are never enabled.
+- **Immutable Guardrails**: `tests/architecture.test.ts` fails if any strict compiler option in `tsconfig.json` or forbidden pattern in `tools/lint.mjs` is weakened or removed.
 
 ## Monorepo Variant Architecture
 

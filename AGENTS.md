@@ -10,14 +10,15 @@ Technical operating rules for this TypeScript repository template.
 ## 2. Toolchain & Validation
 
 - Runtime & package manager: Node.js `24+` and `pnpm` (`npm` and `npx` are forbidden).
+- Static analysis: `pnpm lint` runs `oxlint --deny-warnings` with `.oxlintrc.json` plus custom source rules, and `pnpm typecheck` runs `tsc --noEmit` with the strict `tsconfig.json`. Never weaken either config and never add `@ts-ignore`, `@ts-nocheck`, explicit `any`, loose equality, `var`, `enum`, `namespace`, non-null `!`, `console.*` in `src/`, or boolean flag parameters.
 - Enable hooks locally with `git config core.hooksPath .githooks` and run `pnpm validate` (`TOTAL PASS=8 FAIL=0`) before opening or updating any pull request.
-- Do not run `prettier` or automated code formatters in hooks, CI, or pre-commit steps.
+- Do not run `prettier`, `biome`, or automated code formatters in hooks, CI, or pre-commit steps.
 
 ## 3. Code Layout & Architecture
 
 - Organize domain logic under `src/modules/<domain>/` as a six-file layered modular layout (`entity.ts`, `dto.ts`, `repository.ts`, `service.ts`, `controller.ts`, `module.ts`).
 - Enforce unidirectional imports: `controller` calls `service` and `dto` (never `repository`); `entity` and `dto` must not import `service`, `repository`, or `controller`.
-- Keep every source and documentation file at or below **500 lines**.
+- Document all exported declarations in `src/` with JSDoc comments and keep every source and documentation file at or below **500 lines**.
 
 ## 4. Commit, Dependency & License Policy
 

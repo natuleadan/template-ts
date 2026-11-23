@@ -7,7 +7,15 @@ const ROOT = process.cwd();
 const MAX_LINES = 500;
 const SKIP_DIRS = new Set(["node_modules", ".git", "dist", ".astro", ".turbo"]);
 const CHECK_EXT = /\.(ts|tsx|mjs|js|astro|md|yml|yaml|json)$/;
-const FORBIDDEN_FILES = ["package-lock.json", ".prettierrc", ".prettierrc.json", "prettier.config.mjs"];
+const FORBIDDEN_FILES = [
+  "package-lock.json",
+  ".prettierrc",
+  ".prettierrc.json",
+  "prettier.config.mjs",
+  "biome.json",
+  "biome.jsonc",
+  ".oxfmtrc.json",
+];
 
 function run(name, cmd, args) {
   const res = spawnSync(cmd, args, { cwd: ROOT, encoding: "utf8" });
@@ -53,7 +61,7 @@ function checkHygiene() {
     const rel = relative(ROOT, file);
     const content = readFileSync(file, "utf8");
     const lines = content.split("\n");
-    if (lines.length > MAX_LINES) {
+    if (rel !== "pnpm-lock.yaml" && lines.length > MAX_LINES) {
       errors.push(`${rel} has ${lines.length} lines (max ${MAX_LINES})`);
     }
     if (rel !== "tools/validate.mjs" && content.includes("/Users/")) {

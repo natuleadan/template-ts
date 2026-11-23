@@ -1,0 +1,24 @@
+{
+  "name": "template-ts-change-me",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@12.15.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "lint": "node tools/lint.mjs",
+    "typecheck": "node tools/typecheck.mjs",
+    "build": "node tools/build.mjs",
+    "test": "node --test tests/*.test.ts",
+    "validate": "node tools/validate.mjs",
+    "notices": "node tools/third-party-notices.mjs",
+    "notices:check": "node tools/third-party-notices.mjs --check",
+    "release:plan": "node tools/release-plan.mjs",
+    "release:prepare": "node tools/release-plan.mjs --apply",
+    "release:check": "node tools/release-plan.mjs --check",
+    "commit:check": "node tools/commit-check.mjs"
+  }
+}

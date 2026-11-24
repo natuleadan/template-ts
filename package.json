@@ -11,7 +11,7 @@
   "devDependencies": {
     "@types/node": "26.6.6",
     "oxlint": "1.94.0",
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
   },
   "scripts": {
     "lint": "node tools/lint.mjs",
